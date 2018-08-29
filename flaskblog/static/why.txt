@@ -1,1 +1,1 @@
-Here's the HTML files
+Here's the CSS and JavaScript files
