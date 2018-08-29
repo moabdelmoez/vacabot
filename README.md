@@ -12,8 +12,8 @@ Steps to upload the agent:
 
 Dependencies:
 -------------
-We use Python v3.6
-pip3.6 install -r requirements.txt
+- We use Python v3.6
+- pip3.6 install -r requirements.txt
 
 
 ![chatbot](https://user-images.githubusercontent.com/37369603/44788355-1aef3e00-ab9a-11e8-958f-a7dcc49086bf.png)
