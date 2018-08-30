@@ -166,7 +166,6 @@ celerybeat-schedule
 
 # Environments
 
-.env
 
 .venv
 
