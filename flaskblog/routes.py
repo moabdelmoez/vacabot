@@ -5,7 +5,7 @@ from PIL import Image
 from flask import render_template, jsonify, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from flaskblog.models import User, Post
+from flaskblog.models import User, Post, Vacation
 from flask_login import login_user, current_user, logout_user, login_required
 
 import dialogflow
@@ -96,9 +96,11 @@ def account():
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
+    if current_user.is_authenticated:
+        print("aaaaaa")
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        post = Post(title=form.title.data, content=form.content.data, user_id=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
@@ -159,8 +161,13 @@ def detect_intent_texts(project_id, session_id, text, language_code):
         query_input = dialogflow.types.QueryInput(text=text_input)
         response = session_client.detect_intent(
             session=session, query_input=query_input)
+        #print(response)
+        my_date = ''
 
-        return response.query_result.fulfillment_text
+        if response.query_result.intent.display_name == "Vacation\'s Request - yes":
+            my_date = dict(response.query_result.output_contexts[0].parameters)['start_date']
+            print(my_date)
+        return response.query_result.fulfillment_text, my_date
 
 ###
 #Create a route that this text will be submitted to
@@ -169,6 +176,18 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 def send_message():
     message = request.form['message']
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    fulfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
-    response_text = { "message":  fulfillment_text }
+    fulfillment_text, my_date = detect_intent_texts(project_id, "unique", message, 'en')
+
+    if my_date:
+        from dateutil.parser import parse
+        saved_date = parse(my_date)
+        try:
+            vacation = Vacation(day=saved_date, owner=current_user)
+            db.session.add(vacation)
+            db.session.commit()
+            response_text = {"message": fulfillment_text}
+        except:
+            response_text = {"message": "Please try again"}
+    else:
+        response_text = { "message":  fulfillment_text }
     return jsonify(response_text)
