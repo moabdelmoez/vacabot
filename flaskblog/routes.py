@@ -12,6 +12,9 @@ import dialogflow
 import requests
 import json
 
+from dateutil.parser import parse
+from datetime import datetime
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -161,13 +164,7 @@ def detect_intent_texts(project_id, session_id, text, language_code):
         query_input = dialogflow.types.QueryInput(text=text_input)
         response = session_client.detect_intent(
             session=session, query_input=query_input)
-        #print(response)
-        my_date = ''
-
-        if response.query_result.intent.display_name == "Vacation\'s Request - yes":
-            my_date = dict(response.query_result.output_contexts[0].parameters)['start_date']
-            print(my_date)
-        return response.query_result.fulfillment_text, my_date
+        return response
 
 ###
 #Create a route that this text will be submitted to
@@ -176,18 +173,44 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 def send_message():
     message = request.form['message']
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    fulfillment_text, my_date = detect_intent_texts(project_id, "unique", message, 'en')
-
-    if my_date:
-        from dateutil.parser import parse
+    my_response = detect_intent_texts(project_id, "unique", message, 'en')
+    fulfillment_text = my_response.query_result.fulfillment_text
+    print(my_response.query_result.intent.display_name)
+    ## Vacation add request .. extract the date and save it in database
+    if my_response.query_result.intent.display_name == "Vacation\'s Request - yes":
+        my_date = dict(response.query_result.output_contexts[0].parameters)['start_date']
         saved_date = parse(my_date)
         try:
             vacation = Vacation(day=saved_date, owner=current_user)
             db.session.add(vacation)
             db.session.commit()
-            response_text = {"message": fulfillment_text}
+            response_text = {"message": fulfillment_text }
         except:
-            response_text = {"message": "Please try again"}
+            response_text = {"message": "Please try again" }
+    
+    ## Vacation count request .. check in database and reply
+    elif my_response.query_result.intent.display_name == "Vacation Count":
+        
+        my_vacations = Vacation.query.filter_by(user_id=current_user.id)
+        today_date = datetime.today().date()
+        old_vacations = 0
+        planned_vacations = 0
+        total_vacaations = os.getenv('TOTAL_PERMITTED_VACATIONS_PER_YEAR')
+        for one_vacation in my_vacations:
+            if one_vacation.day.year == 2018 and one_vacation.day <= today_date:
+                old_vacations += 1
+            elif one_vacation.day.year == 2018 and one_vacation.day > today_date:
+                planned_vacations += 1
+        remaining_vacations = int(total_vacaations) - old_vacations - planned_vacations
+        vacations_summary = """Your vacation summary this year is:
+        Old vacations: %d
+        Upcomming planned vacations: %d
+        Remaining vacations: %d
+        """ %(old_vacations, planned_vacations, remaining_vacations)
+        response_text = {"message": vacations_summary }
+        #except:
+        #   response_text = {"message": "Please try again later" }
+        
     else:
-        response_text = { "message":  fulfillment_text }
+        response_text = { "message": fulfillment_text }
     return jsonify(response_text)

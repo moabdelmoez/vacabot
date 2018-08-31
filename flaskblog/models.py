@@ -37,4 +37,4 @@ class Vacation(db.Model):
     day = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.day}', '{self.user_id}')"
+        return f"Vacation('{self.day}', '{self.user_id}')"
