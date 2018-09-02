@@ -19,23 +19,21 @@
     </div>
   </nav>
   <body>
-      <div class="container h-100">
-        <div class="row align-items-center h-100">
-            <div class="col-md-6 col-sm-12 mx-auto">
-                <div class="h-100 justify-content-center">
-                    <div class="chat-container" style="overflow: auto; max-height: 80vh">
-                        <!-- chat messages -->
-                    </div>
-                    <form id="target">
-                       <input class="input" type="text" value="" placeholder="type here..." id="input_message"/>
-                       <input type="submit" hidden>
-                    </form>
-                </div>
-            </div>
+      <div class="container">
+        <div class="header">
+          <h2>We are here for You</h2>
         </div>
-    </div>
+        <div class="chat-container">
+            <!-- chat messages -->
+        </div>
+        <form id="target">
+            <input class="input" type="text" value="" placeholder="Type a message..." id="input_message"/>
+            <input type="submit" hidden>
+        </form>
+      </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='custom.js')}}"></script>
+
   </body>
 </html>
