@@ -1,5 +1,8 @@
 // /static/custom.js
 
+var dateWithouthSecond = new Date();
+dateWithouthSecond.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
 function submit_message(message) {
     $.post( "/send_message", {message: message}, handle_response);
 
@@ -11,11 +14,13 @@ function submit_message(message) {
         <div class="chat-message col-md-5 offset-md-7 bot-message">
             ${element}
         </div>
+        <p align="right"><small>${new Date().toLocaleTimeString()}</small></p>
         `)
       });
       
       // remove the loading indicator
       $( "#loading" ).remove();
+
     }
 }
 
@@ -33,6 +38,7 @@ $('#target').on('submit', function(e){
         <div class="chat-message col-md-5 human-message">
             ${input_message}
         </div>
+        <p><small>${new Date().toLocaleTimeString()}</small></p>
     `)
 
     // loading 
