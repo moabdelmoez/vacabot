@@ -5,11 +5,15 @@ function submit_message(message) {
 
     function handle_response(data) {
       // append the bot repsonse to the div
-      $('.chat-container').append(`
-            <div class="chat-message col-md-5 offset-md-7 bot-message">
-                ${data.message}
-            </div>
-      `)
+      let arr = data.message
+      arr.forEach(element => {
+        $('.chat-container').append(`
+        <div class="chat-message col-md-5 offset-md-7 bot-message">
+            ${element}
+        </div>
+        `)
+      });
+      
       // remove the loading indicator
       $( "#loading" ).remove();
     }
