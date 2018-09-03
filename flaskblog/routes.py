@@ -99,11 +99,11 @@ def account():
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
-    if current_user.is_authenticated:
-        print("aaaaaa")
+    #if current_user.is_authenticated:
+    #    print("aaaaaa")
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, user_id=current_user)
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
