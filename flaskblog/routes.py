@@ -149,6 +149,7 @@ def delete_post(post_id):
 ##Chatbot
 
 @app.route('/index')
+@login_required
 def index():
     return render_template('index.html', title='Vacation Request')
 ###
