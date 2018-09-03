@@ -20,10 +20,15 @@ function submit_message(message) {
       
       // remove the loading indicator
       $( "#loading" ).remove();
+      scrollToDown();
 
     }
 }
 
+function scrollToDown() {
+     var objDiv = document.getElementById("my-chat");
+     objDiv.scrollTop = objDiv.scrollHeight;
+}
 // /static/custom.js
 
 $('#target').on('submit', function(e){
@@ -50,7 +55,7 @@ $('#target').on('submit', function(e){
 
     // clear the text input 
     $('#input_message').val('')
-
+    scrollToDown();
     // send the message
     submit_message(input_message)
 });
