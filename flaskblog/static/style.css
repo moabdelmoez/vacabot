@@ -15,14 +15,14 @@ body,html {
 
 .header{
     padding:20px 20px 18px 20px;
-    background:rgb(235, 149, 149);
-    color:#fff;
     text-align: center;
-    border-radius: 25px;
     margin-bottom: 20px;
+    border-bottom: 1px solid #D3D3D3;
+	padding-bottom: 5px;
 }
 .header h2{
-    font-size:16px;
+	
+    font-size:20px;
     line-height:15px;
     display:inline-block;
 }
