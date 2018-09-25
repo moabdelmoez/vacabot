@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+<table class="table table-hover">
+<thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Old Vacations</th>
+        <th scope="col">Planned Vacations</th>
+        <th scope="col">Planned Vacations Details</th>
+        <th scope="col">Remaining</th>
+    </tr>
+</thead>
+<tbody>
+    {% for item in data %}
+        <tr>
+            <th scope="row">{{ item.user.username }}</th>
+            <td>{{ item.old_count }}</td>
+            <td>{{ item.new_count }}</td>
+            <td class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Details<span class="caret"></span>
+                <ul class="dropdown-menu">
+                    {% for vacation in item.new %}
+                        {% if vacation.day %}
+                            <li><a href="#">{{ vacation.day }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>{{ item.remaining }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock content %}
+      

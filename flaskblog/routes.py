@@ -246,3 +246,27 @@ def send_message():
     else:
         response_text = { "message": [fulfillment_text] }
     return jsonify(response_text)
+
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    my_list = []
+    start_date = parse('2018-01-01')
+    end_date = parse('2019-01-01')
+    users = User.query.all()
+    for user in users:
+        vacations = Vacation.query.filter_by(user_id=user.id).order_by(Vacation.day.asc()).filter(Vacation.day >= start_date).filter(Vacation.day < end_date)
+        old_vacations = vacations.filter(Vacation.day <= date.today())
+        new_vacations = vacations.filter(Vacation.day > date.today())
+        total_vacaations = os.getenv('TOTAL_PERMITTED_VACATIONS_PER_YEAR')
+        remaining = int(total_vacaations) - (old_vacations.count() + new_vacations.count())
+        my_list.append({
+            'user':user,
+            'old_count':old_vacations.count(),
+            'old':old_vacations,
+            'new_count':new_vacations.count(),
+            'new':new_vacations,
+            'remaining':remaining
+        })
+    return render_template('dashboard.html', data=my_list)
