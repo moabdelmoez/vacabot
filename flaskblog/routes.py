@@ -266,7 +266,7 @@ def dashboard():
             'old_count':old_vacations.count(),
             'old':old_vacations,
             'new_count':new_vacations.count(),
-            'new':new_vacations,
+            'new':list(new_vacations),
             'remaining':remaining
         })
     return render_template('dashboard.html', data=my_list)

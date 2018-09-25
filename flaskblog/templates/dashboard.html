@@ -1,33 +1,47 @@
 {% extends "layout.html" %}
 {% block content %}
 <div>
+        <span class="glyphicon glyphicon-plus"></span>
 <table class="table table-hover">
 <thead>
     <tr>
         <th scope="col">Name</th>
         <th scope="col">Old Vacations</th>
         <th scope="col">Planned Vacations</th>
-        <th scope="col">Planned Vacations Details</th>
         <th scope="col">Remaining</th>
     </tr>
 </thead>
 <tbody>
     {% for item in data %}
-        <tr>
+        <tr class="accordion-toggle" data-toggle="collapse" data-target="#{{ item.user.username }}12345-cores">
             <th scope="row">{{ item.user.username }}</th>
             <td>{{ item.old_count }}</td>
             <td>{{ item.new_count }}</td>
-            <td class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Details<span class="caret"></span>
-                <ul class="dropdown-menu">
-                    {% for vacation in item.new %}
-                        {% if vacation.day %}
-                            <li><a href="#">{{ vacation.day }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </td>
             <td>{{ item.remaining }}</td>
         </tr>
+        {% if item.new|length > 0 %}
+        <tr class="accordion-body collapse" id="{{ item.user.username }}12345-cores">
+            <td></td>
+            <td></td>
+            <td >
+                <table class="table">
+                <thead>
+                    <th>Day</th>
+                    <th>Date</th>
+                </thead>
+                <tbody>
+                    {% for vacation in item.new %}
+                        <tr>
+                        <td>{{ vacation.day.strftime("%A") }}</td>
+                        <td>{{ vacation.day }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </td>
+            <td></td>
+        </tr>
+        {% endif %}
     {% endfor %}
 </tbody>
 </table>
