@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chat UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <link rel='stylesheet' href='https://demo.disputelab.com/css/main.min.css?=1535394706'>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+  <nav class="navbar" style="background-color: #5f788a;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand text-white" href="{{ url_for('home') }}">Vodabot</a>
+        <a class="navbar-brand text-white" href="{{ url_for('dashboard') }}">Dashboard</a>
+      </div>
+    </div>
+  </nav>
+</head>
+
+<body style="background-color:white">
+
+<meta id="my-user" data-name="{{ current_user.username }}">
+<div class="container mt-4">
+  <div class="row justify-content-center align-self-stretch">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">VODABOT</div>
+        </div>
+        <div class="card-body p-0">
+          <div class="d-block px-3 py-4 bg-light border">
+            <ul class="chat" id="chat">
+             <li class="chat__item">
+                <div class="chat__avatar" style="background-image: url(&quot;https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&amp;amp;q=80&amp;amp;fm=jpg&amp;amp;crop=entropy&amp;amp;cs=tinysrgb&amp;amp;w=200&amp;amp;fit=max&amp;amp;s=707b9c33066bf8808c934c8ab394dff6&quot;);"></div>
+                <div class="chat__content">
+                    <div class="chat__message">Hi! 😀</div>
+                    <small class="starter chat__info"></small>
+                </div>
+            </li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <div class="form-group">
+              <label><strong>New message:</strong></label>
+              <textarea id="myinput" class="d-block w-100 form-control mb-2 chat__message-input" placeholder="Enter your message"></textarea>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-light mr-2" onclick="clearMessage();"> Clear</button>
+                <button id="mybutton" class="btn btn-primary chat__message-button" onclick="newMessage();">Send Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('static', filename='index.js')}}"></script>
+
+
+
+
+
+</body>
+
+</html>

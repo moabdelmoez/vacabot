@@ -5,13 +5,12 @@ body,html {
     overflow: auto;
 }
 
-.container{
-    width:500px;
+/*.container{
     display:block;
     margin:0 auto;
     box-shadow:0 2px 5px rgba(161, 158, 158, 0.4);
-    height: 90%;
-}
+    
+}*/
 
 .header{
     padding:20px 20px 18px 20px;
@@ -27,19 +26,19 @@ body,html {
     display:inline-block;
 }
 
-.chat-container {
+/*.chat-container {
     padding:18px 20px 10px 20px;
     clear:both;
     height: 70%;
     overflow-y: hidden;
     overflow-x: hidden;
-}
+}*/
 
-.chat-message {
+/*.chat-message {
   padding: 6px;
   border-radius: 3px;
   margin-bottom: 3px;
-}
+}*/
 
 .bot-message {
 	position: relative;
