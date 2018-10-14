@@ -15,7 +15,7 @@ import json
 from dateutil.parser import parse
 from datetime import datetime, timedelta, date
 import time
-import timeout_decorator
+#import timeout_decorator
 
 @app.route("/")
 @app.route("/home")
@@ -175,7 +175,7 @@ def detect_intent_texts(project_id, session_id, text, language_code):
             return 'Sorry, try again!', False
         
 
-###l
+###
 #Create a route that this text will be submitted tol
 def daterange(start_date, end_date):
     for n in range(int ((end_date - start_date).days)):
