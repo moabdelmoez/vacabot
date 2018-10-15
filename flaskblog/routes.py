@@ -17,6 +17,8 @@ from datetime import datetime, timedelta, date
 import time
 #import timeout_decorator
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "mostbot-f83579cadd63.json"
+
 @app.route("/")
 @app.route("/home")
 def home():
