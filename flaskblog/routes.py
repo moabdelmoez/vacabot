@@ -309,7 +309,8 @@ def dashboard():
         vacations = Vacation.query.filter_by(user_id=user.id).order_by(Vacation.day.asc()).filter(Vacation.day >= start_date).filter(Vacation.day < end_date)
         old_vacations = vacations.filter(Vacation.day <= date.today())
         new_vacations = vacations.filter(Vacation.day > date.today())
-        total_vacaations = os.getenv('TOTAL_PERMITTED_VACATIONS_PER_YEAR')
+        total_vacaations = str(os.getenv('TOTAL_PERMITTED_VACATIONS_PER_YEAR'))
+        print(total_vacaations)
         remaining = int(total_vacaations) - (old_vacations.count() + new_vacations.count())
         my_list.append({
             'user':user,

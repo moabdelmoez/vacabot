@@ -205,5 +205,5 @@ venv.bak/
 
 .mypy_cache/
 .idea/
-mostbot-*
+
 flaskblog/static/profile_pics/*
